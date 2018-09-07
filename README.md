@@ -25,7 +25,11 @@ maximum-weight independent set and the other four vertices are not, then you sho
 string 10011010 in the box below.
 
 ## Motivation
-The last algorithm on Huffman codes provided an example of how dynamic programming, a binary tree, a heap, and a unique reconstruction procedure after every returned recursive call worked together to solve a complex problem. This algorithm will provide another example of how dynammic programming can be so useful. 
+The last algorithm on Huffman coding provided an example of how dynamic programming, a binary tree, a heap, and a unique reconstruction procedure after every returned recursive call worked together to solve a complex problem. This algorithm will provide another example of how dynammic programming can be useful for problems where we can: 1) identify a small number of subproblems, 2) quickly compute and correctly solve larger subproblems given the solutions to smaller ones, and 3) quickly compute the final solution after solving all subproblems. In general, reasoning about the structure of the optimal solution is how we identify what the smaller subproblems should be in dynamic programming.
+
+In this algorithm, we did not need a binary tree or heap, but we did use a unique reconstruction procedure again to solve a problem that would have been more complex otherwise. After generating the array A which holds the maximum weights for subsets of the path graph, we traversed A backwards to generate the *actual* maximum-weight independent set (MWIS) of the path graph, each time deciding whether or not to include a vertex in the MWIS depending on whether or not the previous entry in A is equal to (case 1) or less (case 2) than the current entry in A. If the previous entry is equal (case 1), that means the subset of the path graph with the current vertex removed has the same maximum weight and thus we should exclude the current vertex because the computation of A, which correctly computes the maximum weights at each forward step in the path, excluded it from the actual MWIS. If it is less than the current entry in A, that means the subset of the path graph which includes the current vertex has a greater maximum weight than any subset which excludes it and thus the current vertex should be included in the MWIS.
+
+This can be proved by induction. The recursive calls are assumed to be continually correct by the inductive hypothesis, and the inductive step is justified by a case analysis focusing on the last 3 vertices in a proposed MWIS of a path graph.
 
 ## Acknowledgements
 
